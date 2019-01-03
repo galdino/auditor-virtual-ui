@@ -1,0 +1,105 @@
+<app-navbar tituloTela="Assistente Virtual - Serviços" ></app-navbar>
+<app-pdialog tituloDialog="Pesquisar Serviço" [display]="display" (displayChange)="onDialogClose($event)" (servicoChange)="onServicoChange($event)" ></app-pdialog>
+<form [formGroup]="frmservicos" (ngSubmit)="cadastrarRegra(frmservicos)">
+        <div class="jumbotron">
+            <div class="container">
+                <p-fieldset legend="Serviço">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label for="codigoServico" class="control-label required">Código:</label>
+                        </div>
+                        <div class="col-md-3">
+                            <input id="codigo" type="text" pInputText formControlName="codigo" [readonly]="true" />
+                            <input id="dv" type="text" pInputText formControlName="dv" [readonly]="true" />
+                            <i class="fa fa-plus-circle" aria-hidden='true' title="Pesquisar Serviço" 
+                                (click)="showPesquisarServico()"></i>
+                        </div>
+                        <div class="col-md-7">
+                            <span *ngIf="frmservicos.get('selectedIntent').touched && frmservicos.get('codigo').hasError('required')" 
+                            > Campo Obrigatório!</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label for="descricao" class="control-label required">Descrição:</label>
+                        </div>
+                        <div class="col-md-6">
+                            <input id="descricao" type="text" pInputText formControlName="descricao" [readonly]="true" />
+                        </div>
+                        <div class="col-md-4">
+                            <span *ngIf="frmservicos.get('selectedIntent').touched && frmservicos.get('descricao').hasError('required')" 
+                            > Campo Obrigatório!</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label for="codigoUnimed" class="control-label required">Cód. Unimed:</label>
+                        </div>
+                        <div class="col-md-4">
+                            <input id="codigoUnimed" type="text" pInputText formControlName="codigoUnimed" [readonly]="true" />
+                        </div>
+                        <div class="col-md-6">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label for="selectedIntent" class="control-label required">Crítica Autorização:</label>
+                        </div>
+                        <div class="col-md-5">
+                            <p-dropdown id="selectedIntent" [options]="intents" formControlName="selectedIntent" placeholder="Selecione..." [style]="{'width':'420px'}"></p-dropdown>
+                        </div>
+                        <div class="col-md-5">
+                            <span *ngIf="frmservicos.get('selectedIntent').touched && frmservicos.get('selectedIntent').hasError('required')" 
+                            > Campo Obrigatório!</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label for="qtdPermitida" class="control-label required">Quantidade Permitida:</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input id="qtdPermitida" type="text" pInputText formControlName="qtdPermitida" />
+                        </div>
+                        <div class="col-md-9">
+                            <span *ngIf="frmservicos.get('qtdPermitida').touched && frmservicos.get('qtdPermitida').hasError('required')" 
+                            > Campo Obrigatório!</span>
+                        </div>
+                    </div>
+                    <p-messages [value]="msgs"></p-messages>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="dataTable">
+                                <h3>Regras</h3>
+                                <p-dataTable [value]="servCriticaAutorizacao" [rows]="5" [paginator]="true">
+                                        <p-column [style]="{'width':'5%', 'text-align':'center'}" field="id" header="Id" ></p-column>
+                                        <p-column [style]="{'width':'7%', 'text-align':'center'}" field="cod_serv" header="Cód." ></p-column>
+                                        <p-column [style]="{'width':'43%'}" field="intents" header="Crítica Autorização" ></p-column>
+                                        <p-column [style]="{'width':'15%', 'text-align':'center'}" field="data_inclusao" header="Data Inclusão" ></p-column>
+                                        <p-column [style]="{'width':'15%', 'text-align':'center'}" field="data_exclusao" header="Data Exclusão" ></p-column>
+                                        <p-column [style]="{'width':'10%', 'text-align':'center'}" field="quantidade_permitida" header="Quant. Permitida" ></p-column>
+                                        <p-column [style]="{'width':'5%', 'text-align':'center'}" field="data_exclusao" >
+                                            <ng-template let-col let-node="rowData" pTemplate="body">
+                                                <i id="excluir-icon" *ngIf="node[col.field] == ''" (click)="confirmExcluir(node)" class="fa fa-times" title="Excluir Regra"></i>
+                                                <i id="reativar-icon" *ngIf="!node[col.field] == ''" (click)="confirmReativar(node)" class="fa fa-check" title="Reativar Regra"></i>
+                                            </ng-template>
+                                        </p-column>
+                                    </p-dataTable>
+                                    <p-confirmDialog [style]="{width: '500px'}" acceptLabel="Sim" rejectLabel="Não">
+                                    </p-confirmDialog>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
+                            <div id="botao">
+                                <button pButton type="submit" label="Salvar" class="ui-button-rounded ui-button-success" [disabled]="frmservicos.invalid"></button>
+                                <button pButton type="button" label="Cancelar" class="ui-button-rounded ui-button-success" (click)="cancelarRegra(frmservicos)"></button>
+                            </div>
+                        </div>
+                    </div>
+                </p-fieldset>
+            </div>
+        </div>    
+</form>

@@ -1,0 +1,48 @@
+.navbar-unimed{
+    background-color: #0A5F55;
+    border-bottom: solid 3px #B1D34B;
+    height: 53px;
+}
+
+.container-navbar {
+    margin-right: auto;
+    margin-left: auto;
+    width: 960px;
+}
+
+.navbar .brand {
+    display: block;
+    float: left;
+    padding: 15px 20px 10px;
+    margin-left: -20px;
+    font-size: 20px;
+    font-weight: 200;
+    color: white;
+}
+
+img {
+    height: auto;
+    max-width: 100%;
+    vertical-align: middle;
+    border: 0;
+}
+
+#servicos{
+    display: block;
+    float: left;
+    padding: 15px 20px 10px;
+    margin-left: -20px;
+    font-size: 20px;
+    font-weight: 200;
+    color: white !important;
+}
+
+#tituloTela{
+    display: block;
+    float: left;
+    padding: 15px 20px 10px;
+    margin-left: -20px;
+    font-size: 15px;
+    font-weight: 200;
+    color: white !important;
+}

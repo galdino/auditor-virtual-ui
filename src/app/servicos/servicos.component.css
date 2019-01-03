@@ -1,0 +1,80 @@
+#fieldServico{
+    margin-top: 50px;
+}
+
+#codigo{
+    background-color:  #e6e6e6;
+}
+
+#dv{
+    background-color:  #e6e6e6;
+    width: 30px;
+    text-align: center;
+}
+
+#descricao{
+    background-color:  #e6e6e6;
+    width: 100%;
+}
+
+#codigoUnimed{
+    background-color:  #e6e6e6;
+    width: 30px;
+    text-align: center;
+}
+
+#qtdPermitida{
+    width: 40px;
+    text-align: center;
+}
+
+#dataTable{
+    margin-top: 10px;
+}
+
+#botao{
+    float: right;
+}
+
+.row{
+    margin-top: 10px;
+}
+
+.container{
+    margin-top: 25px;
+}
+
+.jumbotron{
+    background-color: white;
+}
+
+.control-label.required:after { 
+    color: #d00;
+    content: "*";
+    margin-left: 5px;
+    top:7px;
+}
+
+i{
+    cursor: pointer;
+    font-size: 25px;
+    vertical-align: -25%;
+}
+
+span {
+    float: left;
+    color:#a94442;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+
+}
+
+h3{
+    text-decoration: underline;
+}
+
+>>> .ui-messages{
+    background-color: #e6e6e6;
+    border-color: #e6e6e6;
+    color: black; 
+}

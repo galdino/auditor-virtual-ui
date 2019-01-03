@@ -1,0 +1,48 @@
+<app-navbar tituloTela="" ></app-navbar>
+<form [formGroup]="frmlogin" (ngSubmit)="fazerLogin(frmlogin)">
+    <div class="jumbotron vertical-center">
+        <div class="container text-center">
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6" id="titulo">
+                    Assistente
+                    <br />
+                    Virtual
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6" id="usuario">
+                    <label for="usuario" class="control-label required">Usuário:</label>
+                    <input id="usuario" type="text" pInputText formControlName="usuario" />
+                    <br />
+                    <span *ngIf="frmlogin.get('usuario').touched && frmlogin.get('usuario').hasError('required')" 
+                            > Campo Obrigatório!</span>
+                    <span *ngIf="frmlogin.get('usuario').touched && frmlogin.get('usuario').hasError('maxlength')"
+                        > Campo limitado a 30 caracteres!</span>
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6" id="senha">
+                    <label for="senha" class="control-label required">Senha:</label>
+                    <input id="senha" type="password" pPassword formControlName="senha" [feedback]=false />
+                    <br />
+                    <span *ngIf="!frmlogin.get('senha').valid && frmlogin.get('senha').touched" 
+                            > Campo Obrigatório!</span>
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6" id="botao">
+                    <button pButton type="submit" label="Entrar" class="ui-button-rounded ui-button-success" [disabled]="frmlogin.invalid"></button>
+                    <button pButton type="button" label="Cancelar" class="ui-button-rounded ui-button-success" (click)="cancelarLogin(frmlogin)"></button>
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+        </div>
+    </div>
+</form>

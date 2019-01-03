@@ -1,0 +1,38 @@
+#titulo{
+    font-family: Arial;
+    font-weight: bold;
+    font-size: 72px;
+    color: #0A5F55;
+}
+
+#botao{
+    margin-top: 20px !important;
+}
+
+#senha{
+    margin-left: 4px;
+}
+
+span {
+    float: right;
+    margin-right: 25%;
+    color:#a94442;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+
+}
+
+.control-label.required:after { 
+    color: #d00;
+    content: "*";
+    margin-left: 5px;
+    top:7px;
+}
+
+.row{
+    margin-top: 10px;
+}
+
+.jumbotron{
+    background-color: white;
+}
