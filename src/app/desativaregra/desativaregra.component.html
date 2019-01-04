@@ -1,0 +1,41 @@
+<app-navbar tituloTela="Assistente Virtual - Desativar Regra Todos Serviços"></app-navbar>
+<form [formGroup]="frmregra" (ngSubmit)="desativarRegra(frmregra)" *ngIf="flgLogado()">
+    <div class="jumbotron">
+        <div class="container">
+            <p-fieldset legend="Crítica Autorização">
+                <div class="row">
+                    <div class="col-md-2">
+                        <label for="selectedIntent" class="control-label required">Crítica Autorização:</label>
+                    </div>
+                    <div class="col-md-5">
+                        <p-dropdown id="selectedIntent" [options]="intents" formControlName="selectedIntent" placeholder="Selecione..." [style]="{'width':'420px'}"></p-dropdown>
+                    </div>
+                    <div class="col-md-5">
+                        <span *ngIf="frmregra.get('selectedIntent').touched && frmregra.get('selectedIntent').hasError('required')" 
+                        > Campo Obrigatório!</span>
+                    </div>
+                    <p-confirmDialog [style]="{width: '500px'}" acceptLabel="Sim" rejectLabel="Não">
+                    </p-confirmDialog>
+                </div>
+                <p-growl class="pGrowl" [value]="msgsGrowl"></p-growl>
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <div id="botao">
+                            <button pButton type="submit" label="Desativar" class="ui-button-rounded ui-button-success" [disabled]="frmregra.invalid"></button>
+                            <button pButton type="button" label="Cancelar" class="ui-button-rounded ui-button-success" (click)="cancelarDesativar(frmregra)"></button>
+                        </div>
+                    </div>
+                </div>
+            </p-fieldset>
+        </div>
+    </div>
+</form>
+<div class="jumbotron vertical-center" *ngIf="!flgLogado()">
+  <div class="container text-center">
+      <div class="row">
+          <p-messages [value]="msgs" id="msgs"></p-messages>
+      </div>
+  </div>
+</div>

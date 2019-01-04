@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { SelectItem, ConfirmationService } from 'primeng/primeng';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Message } from 'primeng/components/common/api';
+import { ConfirmationService, SelectItem } from 'primeng/primeng';
+import { NavbarComponent } from '../navbar/navbar.component';
 
 @Component({
   selector: 'app-servicos',
@@ -20,6 +21,7 @@ export class ServicosComponent implements OnInit {
   servCriticaAutorizacao = [];
 
   msgs: Message[] = [];
+  msgsGrowl: Message[] = [];
 
   constructor(private fb: FormBuilder, private confirmationService: ConfirmationService) { }
 
@@ -44,7 +46,7 @@ export class ServicosComponent implements OnInit {
       {label: 'cartao_beneficiario_fora_validade', value: 'cartao_beneficiario_fora_validade'},
       {label: 'carteira_bloqueada', value: 'carteira_bloqueada'},
       {label: 'autorizacao_so_pode_ser_feita_na_unimed_ou_teleatendimento', value: 'autorizacao_so_pode_ser_feita_na_unimed_ou_teleatendimento'}
-  ];
+    ];
 
   }
 
@@ -57,8 +59,8 @@ export class ServicosComponent implements OnInit {
     });
 
     if(!flgCadastra){
-      this.msgs = [];
-      this.msgs.push({severity:'info', summary:'', detail:'Crítica Autorização já cadastrada para esse serviço!'});
+      this.msgsGrowl = [];
+      this.msgsGrowl.push({severity:'info', summary:'', detail:'Crítica Autorização já cadastrada para esse serviço!'});
     } else {
       let currentDate = new Date();
       let day = currentDate.getDate();
@@ -89,8 +91,8 @@ export class ServicosComponent implements OnInit {
         qtdPermitida: null,
       });
 
-      this.msgs = [];
-      this.msgs.push({severity:'info', summary:'', detail:'Crítica Autorização cadastrada com sucesso!'});
+      this.msgsGrowl = [];
+      this.msgsGrowl.push({severity:'info', summary:'', detail:'Crítica Autorização cadastrada com sucesso!'});
     }
 
   }
@@ -135,8 +137,8 @@ export class ServicosComponent implements OnInit {
        let index =  this.servCriticaAutorizacao.indexOf(regra);
        item.data_exclusao = '';
        this.servCriticaAutorizacao[index] = item;
-       this.msgs = [];
-       this.msgs.push({severity:'info', summary:'', detail:'Regra reativada com sucesso!'});
+       this.msgsGrowl = [];
+       this.msgsGrowl.push({severity:'info', summary:'', detail:'Regra reativada com sucesso!'});
      }
    });
  }
@@ -168,8 +170,8 @@ export class ServicosComponent implements OnInit {
 
       this.servCriticaAutorizacao[index] = item;
       
-      this.msgs = [];
-      this.msgs.push({severity:'info', summary:'', detail:'Regra excluída com sucesso!'});
+      this.msgsGrowl = [];
+      this.msgsGrowl.push({severity:'info', summary:'', detail:'Regra excluída com sucesso!'});
     }
   });
  }
@@ -190,6 +192,14 @@ export class ServicosComponent implements OnInit {
   });
 
   this.servCriticaAutorizacao = [];
+ }
+
+ flgLogado(): boolean{
+  if(!NavbarComponent.flgLogado){
+    this.msgs = [];
+    this.msgs.push({severity:'info', summary:'', detail:'Login não efetuado! Favor  <a href="http://localhost:4200">realizar login</a> para acessar página!'});
+  } 
+  return NavbarComponent.flgLogado;
  }
 
 }

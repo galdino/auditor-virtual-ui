@@ -8,7 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Route, RouterModule } from '@angular/router';
 
-import { DataTableModule, ButtonModule, InputTextModule, InputMaskModule, PasswordModule, FieldsetModule, DialogModule, DropdownModule, ConfirmDialogModule, ConfirmationService, MessagesModule } from 'primeng/primeng';
+import { DataTableModule, ButtonModule, InputTextModule, InputMaskModule, PasswordModule, FieldsetModule, DialogModule, DropdownModule, ConfirmDialogModule, ConfirmationService, MessagesModule, GrowlModule } from 'primeng/primeng';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -17,11 +17,13 @@ import { LoginService } from './login.service';
 import { TelainicialComponent } from './telainicial/telainicial.component';
 import { ServicosComponent } from './servicos/servicos.component';
 import { PdialogComponent } from './pdialog/pdialog.component';
+import { DesativaregraComponent } from './desativaregra/desativaregra.component';
 
 const ROUTES: Route[] = [
   { path: '', component: LoginComponent },
   { path: 'telainicial', component: TelainicialComponent },
-  { path: 'servicos', component: ServicosComponent }
+  { path: 'servicos', component: ServicosComponent },
+  { path: 'desativaregra', component: DesativaregraComponent }
 ]
 
 @NgModule({
@@ -31,7 +33,8 @@ const ROUTES: Route[] = [
     LoginComponent,
     TelainicialComponent,
     ServicosComponent,
-    PdialogComponent
+    PdialogComponent,
+    DesativaregraComponent
   ],
   imports: [
     BrowserModule,
@@ -48,6 +51,7 @@ const ROUTES: Route[] = [
     DropdownModule,
     ConfirmDialogModule,
     MessagesModule,
+    GrowlModule,
     RouterModule.forRoot(ROUTES),
   ],
   providers: [

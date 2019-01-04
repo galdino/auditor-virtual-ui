@@ -23,6 +23,16 @@ p {
     margin-top: 0px;
 }
 
+.container{
+    margin-top: 25px;
+}
+
 .jumbotron{
     background-color: white;
+}
+
+>>> .ui-messages{
+    background-color: #e6e6e6;
+    border-color: #e6e6e6;
+    color: black; 
 }

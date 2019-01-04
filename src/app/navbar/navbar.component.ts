@@ -8,13 +8,11 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 export class NavbarComponent implements OnInit {
 
   @Input() public tituloTela: string;
-  @Input() public static flgLogado= false;
-  @Output() loginChange = new EventEmitter();
+  public static flgLogado= false;
 
   constructor() { }
 
   ngOnInit() {
-    this.loginChange.emit(NavbarComponent.flgLogado);
   }
 
 }

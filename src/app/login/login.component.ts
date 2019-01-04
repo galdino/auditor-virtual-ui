@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginService } from '../login.service';
+import { NavbarComponent } from '../navbar/navbar.component';
 
 @Component({
   selector: 'app-login',
@@ -25,6 +26,7 @@ export class LoginComponent implements OnInit {
   }
 
   fazerLogin(frmlogin: FormGroup){
+    NavbarComponent.flgLogado = true;
     console.log(frmlogin.value);
     this.router.navigate(['./telainicial']);
   }

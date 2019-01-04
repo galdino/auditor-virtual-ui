@@ -1,6 +1,6 @@
-<app-navbar tituloTela="Assistente Virtual - Serviços" ></app-navbar>
+<app-navbar tituloTela="Assistente Virtual - Cadastrar Regras por Serviço"></app-navbar>
 <app-pdialog tituloDialog="Pesquisar Serviço" [display]="display" (displayChange)="onDialogClose($event)" (servicoChange)="onServicoChange($event)" ></app-pdialog>
-<form [formGroup]="frmservicos" (ngSubmit)="cadastrarRegra(frmservicos)">
+<form [formGroup]="frmservicos" (ngSubmit)="cadastrarRegra(frmservicos)" *ngIf="flgLogado()">
         <div class="jumbotron">
             <div class="container">
                 <p-fieldset legend="Serviço">
@@ -65,7 +65,7 @@
                             > Campo Obrigatório!</span>
                         </div>
                     </div>
-                    <p-messages [value]="msgs"></p-messages>
+                    <p-growl class="pGrowl" [value]="msgsGrowl"></p-growl>
                     <div class="row">
                         <div class="col-md-12">
                             <div id="dataTable">
@@ -103,3 +103,10 @@
             </div>
         </div>    
 </form>
+<div class="jumbotron vertical-center" *ngIf="!flgLogado()">
+        <div class="container text-center">
+            <div class="row">
+                <p-messages [value]="msgs" id="msgs"></p-messages>
+            </div>
+        </div>
+</div>
