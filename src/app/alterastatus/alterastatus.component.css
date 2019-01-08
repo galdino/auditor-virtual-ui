@@ -1,0 +1,61 @@
+#status{
+    font-size: 20px;
+}
+
+#ativado{
+    font-size: 25px;
+}
+
+.row{
+    margin-top: 10px;
+}
+
+.container{
+    margin-top: 25px;
+}
+
+.jumbotron{
+    background-color: white;
+}
+
+.control-label.required:after { 
+    color: #d00;
+    content: "*";
+    margin-left: 5px;
+    top:7px;
+}
+
+span {
+    float: left;
+    color:#a94442;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+
+}
+
+::ng-deep .ui-messages{
+    background-color: #e6e6e6;
+    border-color: #e6e6e6;
+    color: black; 
+}
+
+::ng-deep .ui-growl-item {
+    color: #e6e6e6;
+    background-color: #e6e6e6;
+    border-color: #e6e6e6;
+    color: black; 
+    margin-top: 50px;
+}
+
+::ng-deep .ui-inputswitch{
+    font-size: 20px;
+}
+
+::ng-deep .ui-inputswitch-onlabel{
+    background-color: #B1D34B;
+}
+
+::ng-deep .ui-inputswitch-offlabel{
+    color: white;
+    background-color: #a94442;
+}

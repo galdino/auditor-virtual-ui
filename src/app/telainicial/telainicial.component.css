@@ -1,4 +1,4 @@
-#icon1, #icon2{
+#icon1, #icon2, #icon3{
     text-align: center;
     margin-top: 5%;
     border-radius: 10px;
@@ -7,7 +7,7 @@
     cursor: pointer;
 }
 
-#icon1:hover, #icon2:hover{
+#icon1:hover, #icon2:hover, #icon3:hover{
     background-color:  #f2f2f2 !important;
   }
 
@@ -31,7 +31,7 @@ p {
     background-color: white;
 }
 
->>> .ui-messages{
+::ng-deep .ui-messages{
     background-color: #e6e6e6;
     border-color: #e6e6e6;
     color: black; 

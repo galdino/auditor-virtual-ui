@@ -8,7 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Route, RouterModule } from '@angular/router';
 
-import { DataTableModule, ButtonModule, InputTextModule, InputMaskModule, PasswordModule, FieldsetModule, DialogModule, DropdownModule, ConfirmDialogModule, ConfirmationService, MessagesModule, GrowlModule } from 'primeng/primeng';
+import { DataTableModule, ButtonModule, InputTextModule, InputMaskModule, PasswordModule, FieldsetModule, DialogModule, DropdownModule, ConfirmDialogModule, ConfirmationService, MessagesModule, GrowlModule, InputSwitchModule, ToggleButtonModule } from 'primeng/primeng';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -18,12 +18,14 @@ import { TelainicialComponent } from './telainicial/telainicial.component';
 import { ServicosComponent } from './servicos/servicos.component';
 import { PdialogComponent } from './pdialog/pdialog.component';
 import { DesativaregraComponent } from './desativaregra/desativaregra.component';
+import { AlterastatusComponent } from './alterastatus/alterastatus.component';
 
 const ROUTES: Route[] = [
   { path: '', component: LoginComponent },
   { path: 'telainicial', component: TelainicialComponent },
   { path: 'servicos', component: ServicosComponent },
-  { path: 'desativaregra', component: DesativaregraComponent }
+  { path: 'desativaregra', component: DesativaregraComponent },
+  { path: 'alterastatus', component: AlterastatusComponent }
 ]
 
 @NgModule({
@@ -34,7 +36,8 @@ const ROUTES: Route[] = [
     TelainicialComponent,
     ServicosComponent,
     PdialogComponent,
-    DesativaregraComponent
+    DesativaregraComponent,
+    AlterastatusComponent
   ],
   imports: [
     BrowserModule,
@@ -52,6 +55,8 @@ const ROUTES: Route[] = [
     ConfirmDialogModule,
     MessagesModule,
     GrowlModule,
+    InputSwitchModule,
+    ToggleButtonModule,
     RouterModule.forRoot(ROUTES),
   ],
   providers: [

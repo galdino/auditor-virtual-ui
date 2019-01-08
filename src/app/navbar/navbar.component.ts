@@ -9,6 +9,7 @@ export class NavbarComponent implements OnInit {
 
   @Input() public tituloTela: string;
   public static flgLogado= false;
+  public static flgStatus= true;
 
   constructor() { }
 

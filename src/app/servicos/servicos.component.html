@@ -1,4 +1,4 @@
-<app-navbar tituloTela="Assistente Virtual - Cadastrar Regras por Serviço"></app-navbar>
+<app-navbar tituloTela="Assistente Virtual - Cadastrar Regras"></app-navbar>
 <app-pdialog tituloDialog="Pesquisar Serviço" [display]="display" (displayChange)="onDialogClose($event)" (servicoChange)="onServicoChange($event)" ></app-pdialog>
 <form [formGroup]="frmservicos" (ngSubmit)="cadastrarRegra(frmservicos)" *ngIf="flgLogado()">
         <div class="jumbotron">

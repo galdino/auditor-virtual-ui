@@ -1,4 +1,4 @@
-<app-navbar tituloTela="Assitente Virtual - Início" ></app-navbar>
+<app-navbar tituloTela="Assistente Virtual - Início" ></app-navbar>
 <div class="jumbotron vertical-center" *ngIf="flgLogado()">
     <div class="container text-center">
         <div class="row">
@@ -6,7 +6,7 @@
             <div class="col-md-6">
                 <div id="icon1" [routerLink]="['../servicos']" >
                     <i class="fa fa-sitemap" aria-hidden='true'></i>
-                    <p>Cadastrar Regras</p>
+                    <p>Cadastrar Regras Serviço</p>
                 </div>            
             </div>
             <div class="col-md-3"></div>
@@ -16,7 +16,17 @@
             <div class="col-md-6">
                 <div id="icon2" [routerLink]="['../desativaregra']">
                     <i class="fa fa-minus-square" aria-hidden='true'></i>
-                    <p>Desativar Regras</p>
+                    <p>Desativar Regra Crítica</p>
+                </div>            
+            </div>
+            <div class="col-md-3"></div>
+        </div>        
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div id="icon3" [routerLink]="['../alterastatus']">
+                    <i class="fa fa-power-off" aria-hidden='true'></i>
+                    <p>Alterar Status</p>
                 </div>            
             </div>
             <div class="col-md-3"></div>

@@ -1,0 +1,29 @@
+<app-navbar tituloTela="Assistente Virtual - Alterar Status"></app-navbar>
+<form [formGroup]="frmstatus" (ngSubmit)="alterarStatus(frmstatus)" *ngIf="flgLogado()">
+    <div class="jumbotron">
+      <div class="container">
+        <p-fieldset legend="Status Assistente Virtual">
+          <div class="row">
+            <div class="col-md-2">
+              <label for="inpSwitch" id="status">Status:</label>
+            </div>
+            <div class="col-md-5">
+              <p-inputSwitch id="inpSwitch" onLabel="Ativado" offLabel="Desativado" formControlName="inpSwitch" (onChange)="handleChange($event)"></p-inputSwitch>
+            </div>
+            <div class="col-md-5">
+            </div>
+            <p-confirmDialog [style]="{width: '500px'}" acceptLabel="Sim" rejectLabel="Não">
+            </p-confirmDialog>
+          </div>
+        <p-growl class="pGrowl" [value]="msgsGrowl"></p-growl>  
+        </p-fieldset>        
+      </div>
+    </div>
+</form>
+<div class="jumbotron vertical-center" *ngIf="!flgLogado()">
+  <div class="container text-center">
+      <div class="row">
+          <p-messages [value]="msgs" id="msgs"></p-messages>
+      </div>
+  </div>
+</div>

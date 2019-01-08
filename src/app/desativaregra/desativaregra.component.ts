@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { ConfirmationService, SelectItem } from 'primeng/primeng';
 import { Message } from 'primeng/components/common/api';
