@@ -53,6 +53,19 @@ export class DesativaregraComponent implements OnInit {
     });
   }
 
+  ativarRegra(frmregra: FormGroup){
+    this.confirmationService.confirm({
+      message: 'Deseja realmente ativar a regra ' + frmregra.value.selectedIntent + ' de todos os serviços?',
+      header: 'Confirmar Ativar',
+      icon: 'fa fa-info-circle',
+      accept: () => {
+        this.msgsGrowl = [];
+        this.msgsGrowl.push({severity:'info', summary:'', detail:'Regra ativada com sucesso em todos os serviços!'});
+        frmregra.reset();
+      }
+    });
+  }
+
   cancelarDesativar(frmregra: FormGroup){
     frmregra.reset();
   }
