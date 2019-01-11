@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Message } from 'primeng/components/common/api';
 import { ConfirmationService, SelectItem } from 'primeng/primeng';
 import { NavbarComponent } from '../navbar/navbar.component';
+import { Regra } from '../model/regra';
 
 @Component({
   selector: 'app-servicos',
@@ -14,6 +15,7 @@ export class ServicosComponent implements OnInit {
 
   frmservicos: FormGroup;
   display: boolean = false;
+  displayAltRegra: boolean = false;
 
   intents: SelectItem[];
   selectedIntent: number;
@@ -22,6 +24,8 @@ export class ServicosComponent implements OnInit {
 
   msgs: Message[] = [];
   msgsGrowl: Message[] = [];
+
+  selectedRegra = new Regra();
 
   constructor(private fb: FormBuilder, private confirmationService: ConfirmationService) { }
 
@@ -101,8 +105,17 @@ export class ServicosComponent implements OnInit {
     this.display = true;
   }
 
+  showAlterarRegra(regra){
+    this.displayAltRegra = true;
+    this.selectedRegra = regra;
+  }
+
   onDialogClose(event) {
     this.display = event;
+ }
+
+  onDialogRegraClose(event) {
+    this.displayAltRegra = event;
  }
 
   onServicoChange(event) {
@@ -125,6 +138,21 @@ export class ServicosComponent implements OnInit {
     ];
 
     this.servCriticaAutorizacao = [...servCriticaAutorizacaoItens];
+ }
+
+ onRegraChange(event){
+  let servCriticaAutorizacaoAux = [];
+  servCriticaAutorizacaoAux = [...servCriticaAutorizacaoAux, ...this.servCriticaAutorizacao];
+  let  item = servCriticaAutorizacaoAux.find(this.findIndexToUpdate, event.id);
+  let index = servCriticaAutorizacaoAux.indexOf(item);
+  servCriticaAutorizacaoAux[index] = event;
+
+  this.servCriticaAutorizacao = [];
+  this.servCriticaAutorizacao = [...this.servCriticaAutorizacao, ...servCriticaAutorizacaoAux];
+
+  this.msgsGrowl = [];
+  this.msgsGrowl.push({severity:'info', summary:'', detail:'Regra alterada com sucesso!'});
+
  }
 
  confirmReativar(regra){
@@ -200,6 +228,14 @@ export class ServicosComponent implements OnInit {
     this.msgs.push({severity:'info', summary:'', detail:'Login não efetuado! Favor  <a href="http://localhost:4200">realizar login</a> para acessar página!'});
   } 
   return NavbarComponent.flgLogado;
+ }
+
+ numberOnly(event): boolean {
+  const charCode = (event.which) ? event.which : event.keyCode;
+  if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+    return false;
+  }
+  return true;
  }
 
 }

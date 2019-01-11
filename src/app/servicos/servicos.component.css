@@ -36,6 +36,12 @@
     float: right;
 }
 
+#select{
+    cursor: pointer;
+    color: blue;
+    text-decoration: underline;
+}
+
 .row{
     margin-top: 10px;
 }

@@ -1,0 +1,36 @@
+#id, #cod_serv, #data_inclusao, #data_exclusao{
+    background-color:  #e6e6e6;
+}
+
+#intents{
+    background-color:  #e6e6e6;
+    width: 100%;
+}
+
+#quantidade_permitida{
+    width: 40px;
+    text-align: center;
+}
+
+#botao{
+    float: right;
+}
+
+.row{
+    margin-top: 10px;
+}
+
+.control-label.required:after { 
+    color: #d00;
+    content: "*";
+    margin-left: 5px;
+    top:7px;
+}
+
+span {
+    float: left;
+    color:#a94442;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+}
+

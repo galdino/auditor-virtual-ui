@@ -1,0 +1,76 @@
+<p-dialog [(header)]="tituloDialog" [(visible)]="displayAltRegra" modal="modal" [responsive]="true" [width]="700" [minWidth]="200" [positionTop]="80" (onHide)="onClose()">
+    <form [formGroup]="frmaltregra" (ngSubmit)="onSubmit()">
+        <div class="row">
+            <div class="col-md-2">
+                <label for="id" class="control-label required">Id:</label>
+            </div>
+            <div class="col-md-2">
+                <input id="id" type="text" pInputText [readonly]="true" [value]="selectedRegra.id" />
+            </div>
+            <div class="col-md-8">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <label for="cod_serv" class="control-label required">Código:</label>
+            </div>
+            <div class="col-md-2">
+                <input id="cod_serv" type="text" pInputText [readonly]="true" [value]="selectedRegra.cod_serv" />
+            </div>
+            <div class="col-md-8">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <label for="intents" class="control-label required">Crítica Autorização:</label>
+            </div>
+            <div class="col-md-6">
+                <input id="intents" type="text" pInputText [readonly]="true" [value]="selectedRegra.intents" />
+            </div>
+            <div class="col-md-4">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <label for="data_inclusao" class="control-label required">Data Inclusão:</label>
+            </div>
+            <div class="col-md-2">
+                <input id="data_inclusao" type="text" pInputText [readonly]="true" [value]="selectedRegra.data_inclusao" />
+            </div>
+            <div class="col-md-8">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <label for="data_exclusao" class="control-label required">Data Exclusão:</label>
+            </div>
+            <div class="col-md-2">
+                <input id="data_exclusao" type="text" pInputText [readonly]="true" [value]="selectedRegra.data_exclusao" />
+            </div>
+            <div class="col-md-8">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <label for="quantidade_permitida" class="control-label required">Quant. Permitida:</label>
+            </div>
+            <div class="col-md-1">
+                <input id="quantidade_permitida" type="text" pInputText formControlName="quantidade_permitida" (keypress)="numberOnly($event)" />
+            </div>
+            <div class="col-md-9">
+                <span *ngIf="frmaltregra.get('quantidade_permitida').touched && frmaltregra.get('quantidade_permitida').hasError('required')" 
+                > Campo Obrigatório! Somente números!</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <div id="botao">
+                    <button pButton type="submit" label="Alterar" class="ui-button-rounded ui-button-success" [disabled]="frmaltregra.invalid"></button>
+                    <button pButton type="button" label="Cancelar" class="ui-button-rounded ui-button-success" (click)="onClose()"></button>
+                </div>
+            </div>
+        </div>
+    </form>    
+</p-dialog>
