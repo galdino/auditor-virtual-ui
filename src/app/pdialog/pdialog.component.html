@@ -5,7 +5,7 @@
         <label for="codigoServico">Código:</label>
       </div>
       <div class="col-md-2">
-        <input id="codigoServico" type="text" pInputText formControlName="codigoServico" />
+        <input id="codigoServico" type="text" pInputText formControlName="codigoServico" (keypress)="numberOnly($event)" />
       </div>
       <div class="col-md-8">
       </div>
