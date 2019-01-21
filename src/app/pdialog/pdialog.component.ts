@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
+import { ServicoService } from '../service/servico.service';
 
 @Component({
   selector: 'app-pdialog',
@@ -14,21 +15,25 @@ export class PdialogComponent implements OnInit {
   @Output() servicoChange = new EventEmitter();
   frmpesqservico: FormGroup;
 
-  servMedicos = [
-    { codigo: 4080501, dig_verificador: 8, descricao_servico: 'TORAX - 1 INCIDENCIA'  },
-    { codigo: 4020108, dig_verificador: 2, descricao_servico: 'COLONOSCOPIA (INCLUI A RETOSSIGMOIDOSCOPIA)'  },
-    { codigo: 5699134, dig_verificador: 7, descricao_servico: 'CAMPIMETRO MONOCULAR'  },
-    { codigo: 5799115, dig_verificador: 5, descricao_servico: 'CONSULTA CONSULTORIO (HORARIO NORMAL OU PREESTABELECIDO)' },
-    { codigo: 4798415, dig_verificador: 2, descricao_servico: 'ECODOPPLERCARDIOGRAMA TRANSTORACICO' },
-    { codigo: 4754516, dig_verificador: 4, descricao_servico: 'ECOBIOMETRO MONOCULAR' }
-  ];
+  // servMedicos = [
+  //   { codigo: 4080501, dig_verificador: 8, descricao_servico: 'TORAX - 1 INCIDENCIA'  },
+  //   { codigo: 4020108, dig_verificador: 2, descricao_servico: 'COLONOSCOPIA (INCLUI A RETOSSIGMOIDOSCOPIA)'  },
+  //   { codigo: 5699134, dig_verificador: 7, descricao_servico: 'CAMPIMETRO MONOCULAR'  },
+  //   { codigo: 5799115, dig_verificador: 5, descricao_servico: 'CONSULTA CONSULTORIO (HORARIO NORMAL OU PREESTABELECIDO)' },
+  //   { codigo: 4798415, dig_verificador: 2, descricao_servico: 'ECODOPPLERCARDIOGRAMA TRANSTORACICO' },
+  //   { codigo: 4754516, dig_verificador: 4, descricao_servico: 'ECOBIOMETRO MONOCULAR' }
+  // ];
 
-  constructor(private fb: FormBuilder) { }
+  servMedicos = [];
+
+  loading: boolean;
+
+  constructor(private fb: FormBuilder, private servicoService: ServicoService) { }
 
   ngOnInit() {
-    this.frmpesqservico = new FormGroup({
-      codigoServico: new FormControl(''),
-      descricaoServico: new FormControl(''),
+    this.frmpesqservico = this.fb.group({
+      codigoServico: [null, null],
+      descricaoServico: [null, null]
     });
   }
 
@@ -40,8 +45,27 @@ export class PdialogComponent implements OnInit {
     this.displayChange.unsubscribe();
   }
 
-  onSubmit(){
-    console.log(this.frmpesqservico.value);
+  onSubmit(frmpesqservico: FormGroup){
+    let codigoServico: string;
+    let descricaoServico: string;
+    
+    codigoServico = frmpesqservico.value.codigoServico;
+    descricaoServico = frmpesqservico.value.descricaoServico;
+
+    if(codigoServico !== null || descricaoServico !== null){
+      if(codigoServico === null){
+        codigoServico = "";
+      }
+
+      if(descricaoServico === null){
+        descricaoServico = "";
+      }
+      this.loading = true;
+      this.servicoService.pesquisarServico(codigoServico, descricaoServico).subscribe(data => {
+        this.servMedicos = data;
+        this.loading = false;
+      });
+    }
   }
 
   selecionarServico(servico: any){

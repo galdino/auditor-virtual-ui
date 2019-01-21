@@ -27,7 +27,7 @@ export class PdialogalterarComponent implements OnInit {
   }
 
   onSubmit(){
-    let servCriticaAutorizacaoItensAux = { id: this.selectedRegra.id, cod_serv: this.selectedRegra.cod_serv, intents: this.selectedRegra.intents, data_inclusao: this.selectedRegra.data_inclusao, data_exclusao: this.selectedRegra.data_exclusao, quantidade_permitida: this.frmaltregra.value.quantidade_permitida };
+    let servCriticaAutorizacaoItensAux = { id: this.selectedRegra.id, cod_serv: this.selectedRegra.codServMedHosp, intents: this.selectedRegra.intents, data_inclusao: this.selectedRegra.dataInclusao, data_exclusao: this.selectedRegra.dataExclusao, quantidade_permitida: this.frmaltregra.value.quantidade_permitida };
     this.regraChange.emit(servCriticaAutorizacaoItensAux);
     this.frmaltregra.reset();
     this.onClose();

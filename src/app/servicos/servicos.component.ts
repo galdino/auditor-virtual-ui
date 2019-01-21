@@ -4,6 +4,8 @@ import { Message } from 'primeng/components/common/api';
 import { ConfirmationService, SelectItem } from 'primeng/primeng';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { Regra } from '../model/regra';
+import { RegraService } from '../service/regra.service';
+import { Intent } from '../model/intent';
 
 @Component({
   selector: 'app-servicos',
@@ -18,16 +20,19 @@ export class ServicosComponent implements OnInit {
   displayAltRegra: boolean = false;
 
   intents: SelectItem[];
+  intentsAux: Intent[];
   selectedIntent: number;
 
-  servCriticaAutorizacao = [];
+  servCriticaAutorizacao: Regra[];
 
   msgs: Message[] = [];
   msgsGrowl: Message[] = [];
 
   selectedRegra = new Regra();
 
-  constructor(private fb: FormBuilder, private confirmationService: ConfirmationService) { }
+  loading: boolean;
+
+  constructor(private fb: FormBuilder, private confirmationService: ConfirmationService, private regraService: RegraService) { }
 
   ngOnInit() {
     this.frmservicos = this.fb.group({
@@ -39,18 +44,34 @@ export class ServicosComponent implements OnInit {
       qtdPermitida: [null, [Validators.required]]
     });
 
-    this.intents = [
-      {label: 'critica_quantidade', value: 'critica_quantidade'},
-      {label: 'critica_intervalo', value: 'critica_intervalo'},
-      {label: 'guia_nao_permite_realizacao_servico', value: 'guia_nao_permite_realizacao_servico'},
-      {label: 'servico_exige_guia_referencia', value: 'servico_exige_guia_referencia'},
-      {label: 'guia_paciente_internado', value: 'guia_paciente_internado'},
-      {label: 'digitacao_cartao_nao_permitida', value: 'digitacao_cartao_nao_permitida'},
-      {label: 'avaliacao_servico', value: 'avaliacao_servico'},
-      {label: 'cartao_beneficiario_fora_validade', value: 'cartao_beneficiario_fora_validade'},
-      {label: 'carteira_bloqueada', value: 'carteira_bloqueada'},
-      {label: 'autorizacao_so_pode_ser_feita_na_unimed_ou_teleatendimento', value: 'autorizacao_so_pode_ser_feita_na_unimed_ou_teleatendimento'}
-    ];
+    // this.intents = [
+    //   {label: 'critica_quantidade', value: 'critica_quantidade'},
+    //   {label: 'critica_intervalo', value: 'critica_intervalo'},
+    //   {label: 'guia_nao_permite_realizacao_servico', value: 'guia_nao_permite_realizacao_servico'},
+    //   {label: 'servico_exige_guia_referencia', value: 'servico_exige_guia_referencia'},
+    //   {label: 'guia_paciente_internado', value: 'guia_paciente_internado'},
+    //   {label: 'digitacao_cartao_nao_permitida', value: 'digitacao_cartao_nao_permitida'},
+    //   {label: 'avaliacao_servico', value: 'avaliacao_servico'},
+    //   {label: 'cartao_beneficiario_fora_validade', value: 'cartao_beneficiario_fora_validade'},
+    //   {label: 'carteira_bloqueada', value: 'carteira_bloqueada'},
+    //   {label: 'autorizacao_so_pode_ser_feita_na_unimed_ou_teleatendimento', value: 'autorizacao_so_pode_ser_feita_na_unimed_ou_teleatendimento'}
+    // ];
+
+    this.inicializarIntents();
+
+  }
+
+  inicializarIntents(){
+
+    let intentAux: SelectItem;
+
+    this.regraService.pesquisarRegraGeral().subscribe(data => {
+      this.intentsAux = data;
+      this.intentsAux.forEach(element => {
+        console.log(element.intents)
+      });
+    });
+    
 
   }
 
@@ -119,25 +140,33 @@ export class ServicosComponent implements OnInit {
  }
 
   onServicoChange(event) {
+    this.loading = true;
     this.frmservicos.setValue({
-      codigo: event.codigo,
-      dv: event.dig_verificador,
-      descricao: event.descricao_servico,
+      codigo: event.codServico,
+      dv: event.dvServico,
+      descricao: event.descricao,
       codigoUnimed: ServicosComponent.COD_UNIMED_FORTALEZA,
       selectedIntent: this.frmservicos.value.selectedIntent,
       qtdPermitida: this.frmservicos.value.qtdPermitida,
     });
     
-    let servCriticaAutorizacaoItens = [
-      { id: 2213, cod_serv: 4080501, intents: 'cartao_beneficiario_fora_validade', data_inclusao: '17/08/2018 11:55:21', data_exclusao: '18/08/2018 11:00:00', quantidade_permitida: 0 },
-      // { id: 2229, cod_serv: 4080501, intents: 'carteira_bloqueada', data_inclusao: '17/08/2018 11:55:29', data_exclusao: '', quantidade_permitida: 0 },
-      { id: 396, cod_serv: 4080501, intents: 'critica_intervalo', data_inclusao: '17/07/2018 10:16:48', data_exclusao: '', quantidade_permitida: 2 },
-      { id: 391, cod_serv: 4080501, intents: 'critica_quantidade', data_inclusao: '17/07/2018 10:15:48', data_exclusao: '18/07/2018 09:05:48', quantidade_permitida: 2 },
-      { id: 386, cod_serv: 4080501, intents: 'digitacao_cartao_nao_permitida', data_inclusao: '16/07/2018 09:47:23', data_exclusao: '', quantidade_permitida: 2 },
-      { id: 255, cod_serv: 4080501, intents: 'guia_paciente_internado', data_inclusao: '15/07/2018 18:59:05', data_exclusao: '', quantidade_permitida: 2 }
-    ];
+    // let servCriticaAutorizacaoItens = [
+    //   { id: 2213, cod_serv: 4080501, intents: 'cartao_beneficiario_fora_validade', data_inclusao: '17/08/2018 11:55:21', data_exclusao: '18/08/2018 11:00:00', quantidade_permitida: 0 },
+    //   // { id: 2229, cod_serv: 4080501, intents: 'carteira_bloqueada', data_inclusao: '17/08/2018 11:55:29', data_exclusao: '', quantidade_permitida: 0 },
+    //   { id: 396, cod_serv: 4080501, intents: 'critica_intervalo', data_inclusao: '17/07/2018 10:16:48', data_exclusao: '', quantidade_permitida: 2 },
+    //   { id: 391, cod_serv: 4080501, intents: 'critica_quantidade', data_inclusao: '17/07/2018 10:15:48', data_exclusao: '18/07/2018 09:05:48', quantidade_permitida: 2 },
+    //   { id: 386, cod_serv: 4080501, intents: 'digitacao_cartao_nao_permitida', data_inclusao: '16/07/2018 09:47:23', data_exclusao: '', quantidade_permitida: 2 },
+    //   { id: 255, cod_serv: 4080501, intents: 'guia_paciente_internado', data_inclusao: '15/07/2018 18:59:05', data_exclusao: '', quantidade_permitida: 2 }
+    // ];
 
-    this.servCriticaAutorizacao = [...servCriticaAutorizacaoItens];
+    let codigoServicoAux: string;
+    codigoServicoAux = event.codServico;
+
+    this.loading = true;
+    this.regraService.pesquisarRegra(codigoServicoAux).subscribe(data => {
+      this.servCriticaAutorizacao = data;
+      this.loading = false;
+    });
  }
 
  onRegraChange(event){
@@ -163,7 +192,7 @@ export class ServicosComponent implements OnInit {
      accept: () => {
        let  item = this.servCriticaAutorizacao.find(this.findIndexToUpdate, regra.id);
        let index =  this.servCriticaAutorizacao.indexOf(regra);
-       item.data_exclusao = '';
+       item.dataExclusao = '';
        this.servCriticaAutorizacao[index] = item;
        this.msgsGrowl = [];
        this.msgsGrowl.push({severity:'info', summary:'', detail:'Regra reativada com sucesso!'});
@@ -194,7 +223,7 @@ export class ServicosComponent implements OnInit {
 
       let dataExclusao = this.pad(day) + '/' + this.pad(month + 1) + '/' + year + ' ' + hours + ':' + minutes + ':' + this.pad(seconds);
 
-      item.data_exclusao = dataExclusao;
+      item.dataExclusao = dataExclusao;
 
       this.servCriticaAutorizacao[index] = item;
       

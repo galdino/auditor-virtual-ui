@@ -1,5 +1,5 @@
 <p-dialog [(header)]="tituloDialog" [(visible)]="display" modal="modal" [responsive]="true" [width]="700" [minWidth]="200" [positionTop]="80" (onHide)="onClose()">
-  <form [formGroup]="frmpesqservico" (ngSubmit)="onSubmit()">
+  <form [formGroup]="frmpesqservico" (ngSubmit)="onSubmit(frmpesqservico)">
     <div class="row">
       <div class="col-md-2">
         <label for="codigoServico">Código:</label>
@@ -27,15 +27,15 @@
       </div>
     </div>
     <div id="dataTable">
-      <p-dataTable [value]="servMedicos" [rows]="5" [paginator]="true">
+      <p-dataTable [value]="servMedicos" [rows]="5" [paginator]="true" [loading]="loading" emptyMessage="Nenhum registro encontrado!">
         <p-column [style]="{'width':'5%', 'text-align':'center'}" header="Sel." >
           <ng-template let-col let-node="rowData" pTemplate="body">
               <i class="fa fa-info-circle" title="Selecionar Serviço" (click)="selecionarServico(node)"></i>
           </ng-template>
         </p-column>
-        <p-column [style]="{'width':'10%'}" field="codigo" header="Código" ></p-column>
-        <p-column [style]="{'width':'11%', 'text-align':'center'}" field="dig_verificador" header="Díg. Verificador" ></p-column>
-        <p-column [style]="{'width':'69%'}" field="descricao_servico" header="Descrição" ></p-column>
+        <p-column [style]="{'width':'10%'}" field="codServico" header="Código" ></p-column>
+        <p-column [style]="{'width':'11%', 'text-align':'center'}" field="dvServico" header="Díg. Verificador" ></p-column>
+        <p-column [style]="{'width':'69%'}" field="descricao" header="Descrição" ></p-column>
       </p-dataTable>
     </div>
   </form>

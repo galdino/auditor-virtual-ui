@@ -71,18 +71,22 @@
                         <div class="col-md-12">
                             <div id="dataTable">
                                 <h3>Regras</h3>
-                                <p-dataTable [value]="servCriticaAutorizacao" [rows]="5" [paginator]="true">
+                                <p-dataTable [value]="servCriticaAutorizacao" [rows]="5" [paginator]="true" [loading]="loading" emptyMessage="Nenhum registro encontrado!">
                                     <p-column [style]="{'width':'5%', 'text-align':'center'}" field="id" header="Id" >
                                         <ng-template let-col let-node="rowData" pTemplate="body">
                                             <a id="select" title="Alterar Regra" (click)="showAlterarRegra(node)" >{{node[col.field]}}</a>
                                         </ng-template>
                                     </p-column>
-                                    <p-column [style]="{'width':'7%', 'text-align':'center'}" field="cod_serv" header="Cód." ></p-column>
+                                    <p-column [style]="{'width':'7%', 'text-align':'center'}" field="codServMedHosp" header="Cód." ></p-column>
                                     <p-column [style]="{'width':'43%'}" field="intents" header="Crítica Autorização" ></p-column>
-                                    <p-column [style]="{'width':'15%', 'text-align':'center'}" field="data_inclusao" header="Data Inclusão" ></p-column>
-                                    <p-column [style]="{'width':'15%', 'text-align':'center'}" field="data_exclusao" header="Data Exclusão" ></p-column>
-                                    <p-column [style]="{'width':'10%', 'text-align':'center'}" field="quantidade_permitida" header="Quant. Permitida" ></p-column>
-                                    <p-column [style]="{'width':'5%', 'text-align':'center'}" field="data_exclusao" >
+                                    <p-column [style]="{'width':'15%', 'text-align':'center'}" field="dataInclusao" header="Data Inclusão" >
+                                        <ng-template let-col let-node="rowData" pTemplate="body">
+                                            {{ node[col.field] | date: 'dd/MM/yyyy HH:mm:ss' }}
+                                        </ng-template>                                        
+                                    </p-column>
+                                    <p-column [style]="{'width':'15%', 'text-align':'center'}" field="dataExclusao" header="Data Exclusão" ></p-column>
+                                    <p-column [style]="{'width':'10%', 'text-align':'center'}" field="qtdeServMedHospPermitida" header="Quant. Permitida" ></p-column>
+                                    <p-column [style]="{'width':'5%', 'text-align':'center'}" field="dataExclusao" >
                                         <ng-template let-col let-node="rowData" pTemplate="body">
                                             <i id="excluir-icon" *ngIf="node[col.field] == ''" (click)="confirmExcluir(node)" class="fa fa-times" title="Excluir Regra"></i>
                                             <i id="reativar-icon" *ngIf="!node[col.field] == ''" (click)="confirmReativar(node)" class="fa fa-check" title="Reativar Regra"></i>

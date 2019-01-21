@@ -1,10 +1,13 @@
 export class Regra {
     public id: number;
-    public cod_serv: number;
+    public codUnimed: number;
     public intents: string;
-    public data_inclusao: string;
-    public data_exclusao: string;
-    public quantidade_permitida: number;
+    public codServMedHosp: number;
+    public dvServMedHosp: number;
+    public dataInclusao: string;
+    public dataExclusao: string;
+    public qtdeServMedHospPermitida: number;
+    public versao: number;
 
     constructor(        
     ) {}

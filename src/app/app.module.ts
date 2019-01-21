@@ -2,6 +2,7 @@
 //Ex: npm install bootstrap@3.3.7 --save --no-optional
 //ng g c pdialog --spec=false : comando para criar um componente sem arquitetura de teste
 //ng g class /model/regra --spec=false : comando para criar uma classe dentro de uma pasta especifica
+//ng g s /service/servico --spec=false : comando para criar um service dentro de uma pasta especifica
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
@@ -21,6 +22,8 @@ import { PdialogComponent } from './pdialog/pdialog.component';
 import { DesativaregraComponent } from './desativaregra/desativaregra.component';
 import { AlterastatusComponent } from './alterastatus/alterastatus.component';
 import { PdialogalterarComponent } from './pdialogalterar/pdialogalterar.component';
+import { ServicoService } from './service/servico.service';
+import { RegraService } from './service/regra.service';
 
 const ROUTES: Route[] = [
   { path: '', component: LoginComponent },
@@ -64,6 +67,8 @@ const ROUTES: Route[] = [
   ],
   providers: [
     LoginService,
+    ServicoService,
+    RegraService,
     ConfirmationService
   ],
   bootstrap: [AppComponent]
