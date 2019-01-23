@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Regra } from '../model/regra';
+import { RegraService } from '../service/regra.service';
 
 @Component({
   selector: 'app-pdialogalterar',
@@ -17,7 +18,7 @@ export class PdialogalterarComponent implements OnInit {
 
   frmaltregra: FormGroup;
 
-  constructor(private fb: FormBuilder) { 
+  constructor(private fb: FormBuilder, private regraService: RegraService) { 
   }
 
   ngOnInit() {
@@ -26,11 +27,19 @@ export class PdialogalterarComponent implements OnInit {
     });
   }
 
-  onSubmit(){
-    let servCriticaAutorizacaoItensAux = { id: this.selectedRegra.id, cod_serv: this.selectedRegra.codServMedHosp, intents: this.selectedRegra.intents, data_inclusao: this.selectedRegra.dataInclusao, data_exclusao: this.selectedRegra.dataExclusao, quantidade_permitida: this.frmaltregra.value.quantidade_permitida };
-    this.regraChange.emit(servCriticaAutorizacaoItensAux);
-    this.frmaltregra.reset();
-    this.onClose();
+  onSubmit(frmaltregra: FormGroup){
+    this.selectedRegra.qtdeServMedHospPermitida = frmaltregra.value.quantidade_permitida;
+    this.regraService.atualizarRegra(this.selectedRegra).subscribe(data => {
+      if(data !== null){
+        this.regraChange.emit(data);
+        this.frmaltregra.reset();
+        this.onClose();
+      }
+    });
+    // let servCriticaAutorizacaoItensAux = { id: this.selectedRegra.id, cod_serv: this.selectedRegra.codServMedHosp, intents: this.selectedRegra.intents, data_inclusao: this.selectedRegra.dataInclusao, data_exclusao: this.selectedRegra.dataExclusao, quantidade_permitida: frmaltregra.value.quantidade_permitida };
+    // this.regraChange.emit(servCriticaAutorizacaoItensAux);
+    // this.frmaltregra.reset();
+    // this.onClose();
   }
 
   onClose(){

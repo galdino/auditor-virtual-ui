@@ -1,5 +1,5 @@
 <p-dialog [(header)]="tituloDialog" [(visible)]="displayAltRegra" modal="modal" [responsive]="true" [width]="700" [minWidth]="200" [positionTop]="80" (onHide)="onClose()">
-    <form [formGroup]="frmaltregra" (ngSubmit)="onSubmit()">
+    <form [formGroup]="frmaltregra" (ngSubmit)="onSubmit(frmaltregra)">
         <div class="row">
             <div class="col-md-2">
                 <label for="id" class="control-label required">Id:</label>
@@ -15,7 +15,7 @@
                 <label for="cod_serv" class="control-label required">Código:</label>
             </div>
             <div class="col-md-2">
-                <input id="cod_serv" type="text" pInputText [readonly]="true" [value]="selectedRegra.cod_serv" />
+                <input id="cod_serv" type="text" pInputText [readonly]="true" [value]="selectedRegra.codServMedHosp" />
             </div>
             <div class="col-md-8">
             </div>
@@ -24,10 +24,10 @@
             <div class="col-md-2">
                 <label for="intents" class="control-label required">Crítica Autorização:</label>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-8">
                 <input id="intents" type="text" pInputText [readonly]="true" [value]="selectedRegra.intents" />
             </div>
-            <div class="col-md-4">
+            <div class="col-md-2">
             </div>
         </div>
         <div class="row">
@@ -35,7 +35,7 @@
                 <label for="data_inclusao" class="control-label required">Data Inclusão:</label>
             </div>
             <div class="col-md-2">
-                <input id="data_inclusao" type="text" pInputText [readonly]="true" [value]="selectedRegra.data_inclusao" />
+                <input id="data_inclusao" type="text" pInputText [readonly]="true" [value]="selectedRegra.dataInclusao" />
             </div>
             <div class="col-md-8">
             </div>
@@ -45,7 +45,7 @@
                 <label for="data_exclusao" class="control-label required">Data Exclusão:</label>
             </div>
             <div class="col-md-2">
-                <input id="data_exclusao" type="text" pInputText [readonly]="true" [value]="selectedRegra.data_exclusao" />
+                <input id="data_exclusao" type="text" pInputText [readonly]="true" [value]="selectedRegra.dataExclusao" />
             </div>
             <div class="col-md-8">
             </div>

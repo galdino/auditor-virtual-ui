@@ -19,8 +19,7 @@ export class ServicosComponent implements OnInit {
   display: boolean = false;
   displayAltRegra: boolean = false;
 
-  intents: SelectItem[];
-  intentsAux: Intent[];
+  intents: SelectItem[] = [];
   selectedIntent: number;
 
   servCriticaAutorizacao: Regra[];
@@ -62,20 +61,18 @@ export class ServicosComponent implements OnInit {
   }
 
   inicializarIntents(){
-
-    let intentAux: SelectItem;
+    let intentsAux: Intent[] = [];
 
     this.regraService.pesquisarRegraGeral().subscribe(data => {
-      this.intentsAux = data;
-      this.intentsAux.forEach(element => {
-        console.log(element.intents)
+      intentsAux = data;
+      intentsAux.forEach(element => {
+        this.intents.push({label: element.intents, value: element.intents});
       });
     });
-    
-
   }
 
   cadastrarRegra(frmservicos: FormGroup){
+    this.loading = true;
     let flgCadastra = true;
     this.servCriticaAutorizacao.forEach(element => {
       if(element.intents == frmservicos.value.selectedIntent){
@@ -84,6 +81,7 @@ export class ServicosComponent implements OnInit {
     });
 
     if(!flgCadastra){
+      this.loading = false;
       this.msgsGrowl = [];
       this.msgsGrowl.push({severity:'info', summary:'', detail:'Crítica Autorização já cadastrada para esse serviço!'});
     } else {
@@ -95,29 +93,63 @@ export class ServicosComponent implements OnInit {
       let minutes = currentDate.getMinutes();
       let seconds = currentDate.getSeconds();
 
-      let dataInclusao = this.pad(day) + '/' + this.pad(month + 1) + '/' + year + ' ' + hours + ':' + minutes + ':' + this.pad(seconds);
+      let dataInclusao = this.pad(day) + '/' + this.pad(month + 1) + '/' + year + ' ' + this.pad(hours) + ':' + this.pad(minutes) + ':' + this.pad(seconds);
       
-      let servCriticaAutorizacaoCadastrado = []
-      servCriticaAutorizacaoCadastrado.push({ id: 2229, cod_serv: frmservicos.value.codigo, intents: frmservicos.value.selectedIntent, data_inclusao: dataInclusao, data_exclusao: '', quantidade_permitida: frmservicos.value.qtdPermitida });
+      // let servCriticaAutorizacaoCadastrado = []
+      // servCriticaAutorizacaoCadastrado.push({ id: 2229, cod_serv: frmservicos.value.codigo, intents: frmservicos.value.selectedIntent, data_inclusao: dataInclusao, data_exclusao: '', quantidade_permitida: frmservicos.value.qtdPermitida });
+      let regra = new Regra();
+      regra.codUnimed = frmservicos.value.codigoUnimed;
+      regra.intents = frmservicos.value.selectedIntent;
+      regra.codServMedHosp = frmservicos.value.codigo;
+      regra.dvServMedHosp = frmservicos.value.dv;
+      regra.dataInclusao = dataInclusao;
+      regra.dataExclusao = null;
+      regra.qtdeServMedHospPermitida = frmservicos.value.qtdPermitida;
+      regra.versao = 0;
       
-      this.servCriticaAutorizacao = [...servCriticaAutorizacaoCadastrado, ...this.servCriticaAutorizacao];
+      this.regraService.salvarRegra(regra).subscribe(data => {
+        if(data !== null){
+          let codigo = frmservicos.value.codigo;
+          let dv = frmservicos.value.dv;
+          let descricao = frmservicos.value.descricao;
 
-      let codigo = frmservicos.value.codigo;
-      let dv = frmservicos.value.dv;
-      let descricao = frmservicos.value.descricao;
+          frmservicos.reset();
+          this.frmservicos.setValue({
+            codigo: codigo,
+            dv: dv,
+            descricao: descricao,
+            codigoUnimed: ServicosComponent.COD_UNIMED_FORTALEZA,
+            selectedIntent: null,
+            qtdPermitida: null,
+          });
 
-      frmservicos.reset();
-      this.frmservicos.setValue({
-        codigo: codigo,
-        dv: dv,
-        descricao: descricao,
-        codigoUnimed: ServicosComponent.COD_UNIMED_FORTALEZA,
-        selectedIntent: null,
-        qtdPermitida: null,
-      });
+          this.pesquisarRegrasServico(codigo);
 
-      this.msgsGrowl = [];
-      this.msgsGrowl.push({severity:'info', summary:'', detail:'Crítica Autorização cadastrada com sucesso!'});
+          this.msgsGrowl = [];
+          this.msgsGrowl.push({severity:'info', summary:'', detail:'Crítica Autorização cadastrada com sucesso!'});
+
+          this.loading = false;
+        }
+      })
+      
+      // this.servCriticaAutorizacao = [...servCriticaAutorizacaoCadastrado, ...this.servCriticaAutorizacao];
+
+      // let codigo = frmservicos.value.codigo;
+      // let dv = frmservicos.value.dv;
+      // let descricao = frmservicos.value.descricao;
+
+      // frmservicos.reset();
+      // this.frmservicos.setValue({
+      //   codigo: codigo,
+      //   dv: dv,
+      //   descricao: descricao,
+      //   codigoUnimed: ServicosComponent.COD_UNIMED_FORTALEZA,
+      //   selectedIntent: null,
+      //   qtdPermitida: null,
+      // });
+
+      // this.msgsGrowl = [];
+      // this.msgsGrowl.push({severity:'info', summary:'', detail:'Crítica Autorização cadastrada com sucesso!'});
     }
 
   }
@@ -163,39 +195,53 @@ export class ServicosComponent implements OnInit {
     codigoServicoAux = event.codServico;
 
     this.loading = true;
+    this.pesquisarRegrasServico(codigoServicoAux);
+ }
+
+  private pesquisarRegrasServico(codigoServicoAux: string) {
     this.regraService.pesquisarRegra(codigoServicoAux).subscribe(data => {
       this.servCriticaAutorizacao = data;
       this.loading = false;
     });
- }
+  }
 
  onRegraChange(event){
-  let servCriticaAutorizacaoAux = [];
-  servCriticaAutorizacaoAux = [...servCriticaAutorizacaoAux, ...this.servCriticaAutorizacao];
-  let  item = servCriticaAutorizacaoAux.find(this.findIndexToUpdate, event.id);
-  let index = servCriticaAutorizacaoAux.indexOf(item);
-  servCriticaAutorizacaoAux[index] = event;
+  // let servCriticaAutorizacaoAux = [];
+  // servCriticaAutorizacaoAux = [...servCriticaAutorizacaoAux, ...this.servCriticaAutorizacao];
+  // let  item = servCriticaAutorizacaoAux.find(this.findIndexToUpdate, event.id);
+  // let index = servCriticaAutorizacaoAux.indexOf(item);
+  // servCriticaAutorizacaoAux[index] = event;
 
-  this.servCriticaAutorizacao = [];
-  this.servCriticaAutorizacao = [...this.servCriticaAutorizacao, ...servCriticaAutorizacaoAux];
+  // this.servCriticaAutorizacao = [];
+  // this.servCriticaAutorizacao = [...this.servCriticaAutorizacao, ...servCriticaAutorizacaoAux];
+  this.loading = true;
+  this.pesquisarRegrasServico(event.codServMedHosp);
 
   this.msgsGrowl = [];
   this.msgsGrowl.push({severity:'info', summary:'', detail:'Regra alterada com sucesso!'});
 
  }
 
- confirmReativar(regra){
+ confirmReativar(regra: Regra){
    this.confirmationService.confirm({
-     message: 'Deseja realmente reativar a regra ' + regra.intents + ' do serviço ' + regra.cod_serv + '?',
+     message: 'Deseja realmente reativar a regra ' + regra.intents + ' do serviço ' + regra.codServMedHosp + '?',
      header: 'Confirmar Reativar',
      icon: 'fa fa-info-circle',
      accept: () => {
-       let  item = this.servCriticaAutorizacao.find(this.findIndexToUpdate, regra.id);
-       let index =  this.servCriticaAutorizacao.indexOf(regra);
-       item.dataExclusao = '';
-       this.servCriticaAutorizacao[index] = item;
-       this.msgsGrowl = [];
-       this.msgsGrowl.push({severity:'info', summary:'', detail:'Regra reativada com sucesso!'});
+       this.loading = true;
+      //  let  item = this.servCriticaAutorizacao.find(this.findIndexToUpdate, regra.id);
+      //  let index =  this.servCriticaAutorizacao.indexOf(regra);
+      //  item.dataExclusao = '';
+      //  this.servCriticaAutorizacao[index] = item;
+
+      regra.dataExclusao = null;
+      this.regraService.atualizarRegra(regra).subscribe(data => {
+        if(data !== null){
+          this.pesquisarRegrasServico(regra.codServMedHosp.toString());
+          this.msgsGrowl = [];
+          this.msgsGrowl.push({severity:'info', summary:'', detail:'Regra reativada com sucesso!'});
+        }
+      });
      }
    });
  }
@@ -204,14 +250,15 @@ export class ServicosComponent implements OnInit {
   return item.id === this;
  }
 
- confirmExcluir(regra){
+ confirmExcluir(regra: Regra){
   this.confirmationService.confirm({
-    message: 'Deseja realmente excluir a regra ' + regra.intents + ' do serviço ' + regra.cod_serv + '?',
+    message: 'Deseja realmente excluir a regra ' + regra.intents + ' do serviço ' + regra.codServMedHosp + '?',
     header: 'Confirmar Excluir',
     icon: 'fa fa-info-circle',
     accept: () => {
-      let  item = this.servCriticaAutorizacao.find(this.findIndexToUpdate, regra.id);
-      let index =  this.servCriticaAutorizacao.indexOf(regra);
+      this.loading = true;
+      // let  item = this.servCriticaAutorizacao.find(this.findIndexToUpdate, regra.id);
+      // let index =  this.servCriticaAutorizacao.indexOf(regra);
 
       let currentDate = new Date();
       let day = currentDate.getDate();
@@ -221,14 +268,19 @@ export class ServicosComponent implements OnInit {
       let minutes = currentDate.getMinutes();
       let seconds = currentDate.getSeconds();
 
-      let dataExclusao = this.pad(day) + '/' + this.pad(month + 1) + '/' + year + ' ' + hours + ':' + minutes + ':' + this.pad(seconds);
+      let dataExclusao = this.pad(day) + '/' + this.pad(month + 1) + '/' + year + ' ' + this.pad(hours) + ':' + this.pad(minutes) + ':' + this.pad(seconds);
 
-      item.dataExclusao = dataExclusao;
+      // item.dataExclusao = dataExclusao;
+      // this.servCriticaAutorizacao[index] = item;
 
-      this.servCriticaAutorizacao[index] = item;
-      
-      this.msgsGrowl = [];
-      this.msgsGrowl.push({severity:'info', summary:'', detail:'Regra excluída com sucesso!'});
+      regra.dataExclusao = dataExclusao;
+      this.regraService.atualizarRegra(regra).subscribe(data => {
+        if(data !== null){
+          this.pesquisarRegrasServico(regra.codServMedHosp.toString());
+          this.msgsGrowl = [];
+          this.msgsGrowl.push({severity:'info', summary:'', detail:'Regra excluída com sucesso!'});
+        }
+      });
     }
   });
  }

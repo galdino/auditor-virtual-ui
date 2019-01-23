@@ -13,12 +13,24 @@ export class RegraService {
 
   pesquisarRegra(codServico: string): Observable<Regra[]>{
     if(codServico != null){
-      return this.http.get<Regra[]>(AppComponent.API_PESQUISAR_REGRAS + "?codServico=" + codServico, {headers: this.headers});
+      return this.http.get<Regra[]>(AppComponent.API_PESQUISAR_SALVAR_ALTERAR_REGRAS + "?codServico=" + codServico, {headers: this.headers});
+    }
+  }
+  
+  pesquisarRegraGeral(): Observable<Intent[]>{
+    return this.http.get<Intent[]>(AppComponent.API_PESQUISAR_REGRAS_GERAL, {headers: this.headers});
+  }
+  
+  salvarRegra(regra: Regra){
+    if(regra.codServMedHosp != null){
+      return this.http.post(AppComponent.API_PESQUISAR_SALVAR_ALTERAR_REGRAS, regra, {headers: this.headers});
     }
   }
 
-  pesquisarRegraGeral(): Observable<Intent[]>{
-    return this.http.get<Intent[]>(AppComponent.API_PESQUISAR_REGRAS_GERAL, {headers: this.headers});
+  atualizarRegra(regra: Regra){
+    if(regra.codServMedHosp != null){
+      return this.http.put(AppComponent.API_PESQUISAR_SALVAR_ALTERAR_REGRAS, regra, {headers: this.headers});
+    }
   }
 
 }

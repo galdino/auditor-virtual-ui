@@ -1,4 +1,4 @@
-<app-navbar tituloTela="Assistente Virtual - Cadastrar Regras"></app-navbar>
+<app-navbar tituloTela="Assistente Virtual - Cadastrar Regras Serviço"></app-navbar>
 <app-pdialog tituloDialog="Pesquisar Serviço" [display]="display" (displayChange)="onDialogClose($event)" (servicoChange)="onServicoChange($event)" ></app-pdialog>
 <app-pdialogalterar tituloDialog="Alterar Regra" [displayAltRegra]="displayAltRegra" [selectedRegra]="selectedRegra" (displayAltRegraChange)="onDialogRegraClose($event)" (regraChange)="onRegraChange($event)"></app-pdialogalterar>
 <form [formGroup]="frmservicos" (ngSubmit)="cadastrarRegra(frmservicos)" *ngIf="flgLogado()">
@@ -80,21 +80,21 @@
                                     <p-column [style]="{'width':'7%', 'text-align':'center'}" field="codServMedHosp" header="Cód." ></p-column>
                                     <p-column [style]="{'width':'43%'}" field="intents" header="Crítica Autorização" ></p-column>
                                     <p-column [style]="{'width':'15%', 'text-align':'center'}" field="dataInclusao" header="Data Inclusão" >
-                                        <ng-template let-col let-node="rowData" pTemplate="body">
+                                        <!-- <ng-template let-col let-node="rowData" pTemplate="body">
                                             {{ node[col.field] | date: 'dd/MM/yyyy HH:mm:ss' }}
-                                        </ng-template>                                        
+                                        </ng-template>                                         -->
                                     </p-column>
                                     <p-column [style]="{'width':'15%', 'text-align':'center'}" field="dataExclusao" header="Data Exclusão" ></p-column>
                                     <p-column [style]="{'width':'10%', 'text-align':'center'}" field="qtdeServMedHospPermitida" header="Quant. Permitida" ></p-column>
                                     <p-column [style]="{'width':'5%', 'text-align':'center'}" field="dataExclusao" >
                                         <ng-template let-col let-node="rowData" pTemplate="body">
-                                            <i id="excluir-icon" *ngIf="node[col.field] == ''" (click)="confirmExcluir(node)" class="fa fa-times" title="Excluir Regra"></i>
-                                            <i id="reativar-icon" *ngIf="!node[col.field] == ''" (click)="confirmReativar(node)" class="fa fa-check" title="Reativar Regra"></i>
+                                            <i id="excluir-icon" *ngIf="node[col.field] == null" (click)="confirmExcluir(node)" class="fa fa-times" title="Excluir Regra"></i>
+                                            <i id="reativar-icon" *ngIf="node[col.field] != null" (click)="confirmReativar(node)" class="fa fa-check" title="Reativar Regra"></i>
                                         </ng-template>
                                     </p-column>
                                 </p-dataTable>
-                                    <p-confirmDialog [style]="{width: '500px'}" acceptLabel="Sim" rejectLabel="Não">
-                                    </p-confirmDialog>
+                                <p-confirmDialog acceptLabel="Sim" rejectLabel="Não">
+                                </p-confirmDialog>
                             </div>
                         </div>
                     </div>
