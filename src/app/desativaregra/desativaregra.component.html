@@ -1,5 +1,5 @@
 <app-navbar tituloTela="Assistente Virtual - Ativar/Desativar Regra Crítica"></app-navbar>
-<form [formGroup]="frmregra" (ngSubmit)="desativarRegra(frmregra)" *ngIf="flgLogado()">
+<form [formGroup]="frmregra" *ngIf="flgLogado()">
     <div class="jumbotron">
         <div class="container">
             <p-fieldset legend="Crítica Autorização">
@@ -8,7 +8,7 @@
                         <label for="selectedIntent" class="control-label required">Crítica Autorização:</label>
                     </div>
                     <div class="col-md-5">
-                        <p-dropdown id="selectedIntent" [options]="intents" formControlName="selectedIntent" placeholder="Selecione..." [style]="{'width':'420px'}"></p-dropdown>
+                        <p-dropdown id="selectedIntent" [options]="intents" formControlName="selectedIntent" placeholder="Selecione..." [style]="{'width':'420px'}" (onChange)="onChangeRegra(frmregra)"></p-dropdown>
                     </div>
                     <div class="col-md-5">
                         <span *ngIf="frmregra.get('selectedIntent').touched && frmregra.get('selectedIntent').hasError('required')" 
@@ -23,8 +23,8 @@
                     <div class="col-md-4"></div>
                     <div class="col-md-4">
                         <div id="botao">
-                            <button pButton type="button" label="Ativar" class="ui-button-rounded ui-button-success" [disabled]="frmregra.invalid" (click)="ativarRegra(frmregra)"></button>
-                            <button pButton type="submit" label="Desativar" class="ui-button-rounded ui-button-success" [disabled]="frmregra.invalid"></button>
+                            <button pButton type="button" label="Ativar" class="ui-button-rounded ui-button-success" [disabled]="flgDisabledAtivar" (click)="ativarRegra(frmregra)"></button>
+                            <button pButton type="button" label="Desativar" class="ui-button-rounded ui-button-success" [disabled]="flgDisabledDesativar" (click)="desativarRegra(frmregra)"></button>
                             <button pButton type="button" label="Cancelar" class="ui-button-rounded ui-button-success" (click)="cancelarDesativar(frmregra)"></button>
                         </div>
                     </div>

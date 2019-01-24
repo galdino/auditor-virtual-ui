@@ -11,14 +11,20 @@ export class RegraService {
 
   constructor(private http: HttpClient) { }
 
+  pesquisarRegraGeral(): Observable<Intent[]>{
+    return this.http.get<Intent[]>(AppComponent.API_PESQUISAR_ALTERAR_REGRAS_GERAL, {headers: this.headers});
+  }
+
+  atualizarRegraGeral(intent: Intent){
+    if(intent.id != null){
+      return this.http.put(AppComponent.API_PESQUISAR_ALTERAR_REGRAS_GERAL, intent, {headers: this.headers});
+    }
+  }
+  
   pesquisarRegra(codServico: string): Observable<Regra[]>{
     if(codServico != null){
       return this.http.get<Regra[]>(AppComponent.API_PESQUISAR_SALVAR_ALTERAR_REGRAS + "?codServico=" + codServico, {headers: this.headers});
     }
-  }
-  
-  pesquisarRegraGeral(): Observable<Intent[]>{
-    return this.http.get<Intent[]>(AppComponent.API_PESQUISAR_REGRAS_GERAL, {headers: this.headers});
   }
   
   salvarRegra(regra: Regra){
