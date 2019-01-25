@@ -24,6 +24,7 @@ import { AlterastatusComponent } from './alterastatus/alterastatus.component';
 import { PdialogalterarComponent } from './pdialogalterar/pdialogalterar.component';
 import { ServicoService } from './service/servico.service';
 import { RegraService } from './service/regra.service';
+import { ParametroService } from './service/parametro.service';
 
 const ROUTES: Route[] = [
   { path: '', component: LoginComponent },
@@ -69,6 +70,7 @@ const ROUTES: Route[] = [
     LoginService,
     ServicoService,
     RegraService,
+    ParametroService,
     ConfirmationService
   ],
   bootstrap: [AppComponent]

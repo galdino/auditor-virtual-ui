@@ -6,6 +6,7 @@ import { NavbarComponent } from '../navbar/navbar.component';
 import { Regra } from '../model/regra';
 import { RegraService } from '../service/regra.service';
 import { Intent } from '../model/intent';
+import { AppComponent } from '../app.component';
 
 @Component({
   selector: 'app-servicos',
@@ -13,8 +14,6 @@ import { Intent } from '../model/intent';
   styleUrls: ['./servicos.component.css']
 })
 export class ServicosComponent implements OnInit {
-  public static COD_UNIMED_FORTALEZA=63;
-
   frmservicos: FormGroup;
   display: boolean = false;
   displayAltRegra: boolean = false;
@@ -38,7 +37,7 @@ export class ServicosComponent implements OnInit {
       codigo: [null, [Validators.required]],
       dv: [null, [Validators.required]],
       descricao: [null, [Validators.required]],
-      codigoUnimed: [ServicosComponent.COD_UNIMED_FORTALEZA, [Validators.required]],
+      codigoUnimed: [AppComponent.COD_UNIMED_FORTALEZA, [Validators.required]],
       selectedIntent: [null, [Validators.required]],
       qtdPermitida: [null, [Validators.required]]
     });
@@ -118,7 +117,7 @@ export class ServicosComponent implements OnInit {
             codigo: codigo,
             dv: dv,
             descricao: descricao,
-            codigoUnimed: ServicosComponent.COD_UNIMED_FORTALEZA,
+            codigoUnimed: AppComponent.COD_UNIMED_FORTALEZA,
             selectedIntent: null,
             qtdPermitida: null,
           });
@@ -177,7 +176,7 @@ export class ServicosComponent implements OnInit {
       codigo: event.codServico,
       dv: event.dvServico,
       descricao: event.descricao,
-      codigoUnimed: ServicosComponent.COD_UNIMED_FORTALEZA,
+      codigoUnimed: AppComponent.COD_UNIMED_FORTALEZA,
       selectedIntent: this.frmservicos.value.selectedIntent,
       qtdPermitida: this.frmservicos.value.qtdPermitida,
     });
@@ -295,7 +294,7 @@ export class ServicosComponent implements OnInit {
     codigo: null,
     dv: null,
     descricao: null,
-    codigoUnimed: ServicosComponent.COD_UNIMED_FORTALEZA,
+    codigoUnimed: AppComponent.COD_UNIMED_FORTALEZA,
     selectedIntent: null,
     qtdPermitida: null,
   });

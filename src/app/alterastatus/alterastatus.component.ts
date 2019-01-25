@@ -3,6 +3,9 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { ConfirmationService, SelectItem } from 'primeng/primeng';
 import { Message } from 'primeng/components/common/api';
+import { Parametro } from '../model/parametro';
+import { ParametroService } from '../service/parametro.service';
+import { AppComponent } from '../app.component';
 
 @Component({
   selector: 'app-alterastatus',
@@ -15,16 +18,35 @@ export class AlterastatusComponent implements OnInit {
 
   msgs: Message[] = [];
   msgsGrowl: Message[] = [];
+  
+  parametro: Parametro;
 
-  inpSwitch: boolean;
-
-  constructor(private fb: FormBuilder, private confirmationService: ConfirmationService) { }
+  constructor(private fb: FormBuilder, private confirmationService: ConfirmationService, private parametroService: ParametroService) { }
 
   ngOnInit() {
     this.frmstatus = this.fb.group({ 
-      inpSwitch: [this.flgStatus, [Validators.required]]
+      inpSwitch: [true, [Validators.required]]
     });
 
+    this.inicializarStatus();
+
+  }
+
+  inicializarStatus(){
+    this.parametroService.pesquisarParametro(AppComponent.COD_UNIMED_FORTALEZA.toString()).subscribe(data => {
+      if(data !== null){
+        this.parametro = data;
+        if(this.parametro.flagAtivaBuscaAtendimento === 'S'){
+          this.frmstatus.setValue({
+            inpSwitch: true
+          });
+        } else {
+          this.frmstatus.setValue({
+            inpSwitch: false
+          });
+        }
+      }
+    });
   }
 
   handleChange(event){
@@ -37,11 +59,17 @@ export class AlterastatusComponent implements OnInit {
         header: 'Confirmar Desativar',
         icon: 'fa fa-info-circle',
         accept: () => {
-          this.frmstatus.setValue({
-            inpSwitch: false
+          this.parametro.flagAtivaBuscaAtendimento = 'N';
+          this.parametroService.atualizarParametro(this.parametro).subscribe(data => {
+            if(data !== null){
+              this.inicializarStatus();
+              this.msgsGrowl = [];
+              this.msgsGrowl.push({severity:'info', summary:'', detail:'Assistente Virtual desativado com sucesso!'});
+            }
           });
-          this.msgsGrowl = [];
-          this.msgsGrowl.push({severity:'info', summary:'', detail:'Assistente Virtual desativado com sucesso!'});
+          // this.frmstatus.setValue({
+          //   inpSwitch: false
+          // });
         }
       });
     } else {
@@ -53,11 +81,17 @@ export class AlterastatusComponent implements OnInit {
         header: 'Confirmar Ativar',
         icon: 'fa fa-info-circle',
         accept: () => {
-          this.frmstatus.setValue({
-            inpSwitch: true
+          this.parametro.flagAtivaBuscaAtendimento = 'S';
+          this.parametroService.atualizarParametro(this.parametro).subscribe(data => {
+            if(data !== null){
+              this.inicializarStatus();
+              this.msgsGrowl = [];
+              this.msgsGrowl.push({severity:'info', summary:'', detail:'Assistente Virtual ativado com sucesso!'});
+            }
           });
-          this.msgsGrowl = [];
-          this.msgsGrowl.push({severity:'info', summary:'', detail:'Assistente Virtual ativado com sucesso!'});
+          // this.frmstatus.setValue({
+          //   inpSwitch: true
+          // });
         }
       });
     }
