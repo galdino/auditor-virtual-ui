@@ -56,6 +56,10 @@ export class DesativaregraComponent implements OnInit {
       this.intentsAux.forEach(element => {
         this.intents.push({label: element.intents, value: element.intents});
       });
+    }, error => {
+        console.log(error);
+        this.msgsGrowl = [];
+        this.msgsGrowl.push({severity:'info', summary:'', detail:'Ocorreu um erro no servidor do Assistente! Favor contactar TI para suporte!'});
     });
   }
 
@@ -78,6 +82,10 @@ export class DesativaregraComponent implements OnInit {
             this.msgsGrowl = [];
             this.msgsGrowl.push({severity:'info', summary:'', detail:'Regra desativada com sucesso em todos os serviços!'});
           }
+        }, error => {
+            console.log(error);
+            this.msgsGrowl = [];
+            this.msgsGrowl.push({severity:'info', summary:'', detail:'Ocorreu um erro no servidor do Assistente! Favor contactar TI para suporte!'});
         });
       }
     });
@@ -102,6 +110,10 @@ export class DesativaregraComponent implements OnInit {
             this.msgsGrowl = [];
             this.msgsGrowl.push({severity:'info', summary:'', detail:'Regra ativada com sucesso em todos os serviços!'});
           }
+        }, error => {
+            console.log(error);
+            this.msgsGrowl = [];
+            this.msgsGrowl.push({severity:'info', summary:'', detail:'Ocorreu um erro no servidor do Assistente! Favor contactar TI para suporte!'});
         });
       }
     });

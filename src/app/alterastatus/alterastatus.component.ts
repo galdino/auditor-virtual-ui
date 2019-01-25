@@ -46,6 +46,10 @@ export class AlterastatusComponent implements OnInit {
           });
         }
       }
+    }, error => {
+        console.log(error);
+        this.msgsGrowl = [];
+        this.msgsGrowl.push({severity:'info', summary:'', detail:'Ocorreu um erro no servidor do Assistente! Favor contactar TI para suporte!'});
     });
   }
 
@@ -66,6 +70,10 @@ export class AlterastatusComponent implements OnInit {
               this.msgsGrowl = [];
               this.msgsGrowl.push({severity:'info', summary:'', detail:'Assistente Virtual desativado com sucesso!'});
             }
+          }, error => {
+              console.log(error);
+              this.msgsGrowl = [];
+              this.msgsGrowl.push({severity:'info', summary:'', detail:'Ocorreu um erro no servidor do Assistente! Favor contactar TI para suporte!'});
           });
           // this.frmstatus.setValue({
           //   inpSwitch: false
@@ -88,6 +96,10 @@ export class AlterastatusComponent implements OnInit {
               this.msgsGrowl = [];
               this.msgsGrowl.push({severity:'info', summary:'', detail:'Assistente Virtual ativado com sucesso!'});
             }
+          }, error => {
+              console.log(error);
+              this.msgsGrowl = [];
+              this.msgsGrowl.push({severity:'info', summary:'', detail:'Ocorreu um erro no servidor do Assistente! Favor contactar TI para suporte!'});
           });
           // this.frmstatus.setValue({
           //   inpSwitch: true

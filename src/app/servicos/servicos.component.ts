@@ -67,6 +67,10 @@ export class ServicosComponent implements OnInit {
       intentsAux.forEach(element => {
         this.intents.push({label: element.intents, value: element.intents});
       });
+    }, error => {
+        console.log(error);
+        this.msgsGrowl = [];
+        this.msgsGrowl.push({severity:'info', summary:'', detail:'Ocorreu um erro no servidor do Assistente! Favor contactar TI para suporte!'});
     });
   }
 
@@ -129,7 +133,11 @@ export class ServicosComponent implements OnInit {
 
           this.loading = false;
         }
-      })
+      }, error => {
+          console.log(error);
+          this.msgsGrowl = [];
+          this.msgsGrowl.push({severity:'info', summary:'', detail:'Ocorreu um erro no servidor do Assistente! Favor contactar TI para suporte!'});
+      });
       
       // this.servCriticaAutorizacao = [...servCriticaAutorizacaoCadastrado, ...this.servCriticaAutorizacao];
 
@@ -201,6 +209,10 @@ export class ServicosComponent implements OnInit {
     this.regraService.pesquisarRegra(codigoServicoAux).subscribe(data => {
       this.servCriticaAutorizacao = data;
       this.loading = false;
+    }, error => {
+        console.log(error);
+        this.msgsGrowl = [];
+        this.msgsGrowl.push({severity:'info', summary:'', detail:'Ocorreu um erro no servidor do Assistente! Favor contactar TI para suporte!'});
     });
   }
 
@@ -240,6 +252,10 @@ export class ServicosComponent implements OnInit {
           this.msgsGrowl = [];
           this.msgsGrowl.push({severity:'info', summary:'', detail:'Regra reativada com sucesso!'});
         }
+      }, error => {
+          console.log(error);
+          this.msgsGrowl = [];
+          this.msgsGrowl.push({severity:'info', summary:'', detail:'Ocorreu um erro no servidor do Assistente! Favor contactar TI para suporte!'});
       });
      }
    });
@@ -279,6 +295,10 @@ export class ServicosComponent implements OnInit {
           this.msgsGrowl = [];
           this.msgsGrowl.push({severity:'info', summary:'', detail:'Regra excluída com sucesso!'});
         }
+      }, error => {
+          console.log(error);
+          this.msgsGrowl = [];
+          this.msgsGrowl.push({severity:'info', summary:'', detail:'Ocorreu um erro no servidor do Assistente! Favor contactar TI para suporte!'});
       });
     }
   });
