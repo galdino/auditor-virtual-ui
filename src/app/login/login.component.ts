@@ -3,6 +3,7 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { LoginService } from '../login.service';
 import { NavbarComponent } from '../navbar/navbar.component';
+import { AppComponent } from '../app.component';
 
 @Component({
   selector: 'app-login',
@@ -11,6 +12,7 @@ import { NavbarComponent } from '../navbar/navbar.component';
 })
 export class LoginComponent implements OnInit {
   frmlogin: FormGroup;
+  flgLoginInvalido = false;
 
   constructor(private loginService: LoginService, private router: Router, private fb: FormBuilder) { }
 
@@ -26,9 +28,13 @@ export class LoginComponent implements OnInit {
   }
 
   fazerLogin(frmlogin: FormGroup){
-    NavbarComponent.flgLogado = true;
-    console.log(frmlogin.value);
-    this.router.navigate(['./telainicial']);
+    if(frmlogin.value.usuario === AppComponent.USUARIO && frmlogin.value.senha === AppComponent.SENHA){
+      NavbarComponent.flgLogado = true;
+      console.log(frmlogin.value);
+      this.router.navigate(['./telainicial']);
+    } else {
+      this.flgLoginInvalido = true;
+    }
   }
 
   cancelarLogin(frmlogin: FormControl){
