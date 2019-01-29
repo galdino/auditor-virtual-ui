@@ -88,8 +88,8 @@
                                     <p-column [style]="{'width':'10%', 'text-align':'center'}" field="qtdeServMedHospPermitida" header="Quant. Permitida" ></p-column>
                                     <p-column [style]="{'width':'5%', 'text-align':'center'}" field="dataExclusao" >
                                         <ng-template let-col let-node="rowData" pTemplate="body">
-                                            <i id="excluir-icon" *ngIf="node[col.field] == null" (click)="confirmExcluir(node)" class="fa fa-times" title="Excluir Regra"></i>
-                                            <i id="reativar-icon" *ngIf="node[col.field] != null" (click)="confirmReativar(node)" class="fa fa-check" title="Reativar Regra"></i>
+                                            <i id="excluir-icon" *ngIf="node[col.field] == null" (click)="confirmExcluir(node)" class="fa fa-check" title="Alterar Status"></i>
+                                            <i id="reativar-icon" *ngIf="node[col.field] != null" (click)="confirmReativar(node)" class="fa fa-times" title="Alterar Status"></i>
                                         </ng-template>
                                     </p-column>
                                 </p-dataTable>

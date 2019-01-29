@@ -26,6 +26,7 @@
         <button pButton type="button" label="Cancelar" class="ui-button-rounded ui-button-success" (click)="onClose()"></button>
       </div>
     </div>
+    <p-growl class="pGrowl" [value]="msgsGrowl"></p-growl>
     <div id="dataTable">
       <p-dataTable [value]="servMedicos" [rows]="5" [paginator]="true" [loading]="loading" emptyMessage="Nenhum registro encontrado!">
         <p-column [style]="{'width':'5%', 'text-align':'center'}" header="Sel." >

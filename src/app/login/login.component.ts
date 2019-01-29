@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  cancelarLogin(frmlogin: FormControl){
+  cancelarLogin(frmlogin: FormGroup){
     frmlogin.reset();
   }
 

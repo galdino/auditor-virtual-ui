@@ -13,3 +13,11 @@
 i{
     cursor: pointer;
 }
+
+::ng-deep .ui-growl-item {
+    color: #e6e6e6;
+    background-color: #e6e6e6;
+    border-color: #e6e6e6;
+    color: black; 
+    margin-top: 50px;
+}

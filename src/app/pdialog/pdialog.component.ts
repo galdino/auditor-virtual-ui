@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { ServicoService } from '../service/servico.service';
+import { Message } from 'primeng/components/common/api';
 
 @Component({
   selector: 'app-pdialog',
@@ -27,6 +28,8 @@ export class PdialogComponent implements OnInit {
   servMedicos = [];
 
   loading: boolean;
+
+  msgsGrowl: Message[] = [];
 
   constructor(private fb: FormBuilder, private servicoService: ServicoService) { }
 
@@ -64,6 +67,10 @@ export class PdialogComponent implements OnInit {
       this.servicoService.pesquisarServico(codigoServico, descricaoServico).subscribe(data => {
         this.servMedicos = data;
         this.loading = false;
+      }, error => {
+          console.log(error);
+          this.msgsGrowl = [];
+          this.msgsGrowl.push({severity:'info', summary:'', detail:'Ocorreu um erro no servidor do Assistente! Favor contactar TI para suporte!'});
       });
     }
   }
