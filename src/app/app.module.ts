@@ -3,6 +3,7 @@
 //ng g c pdialog --spec=false : comando para criar um componente sem arquitetura de teste
 //ng g class /model/regra --spec=false : comando para criar uma classe dentro de uma pasta especifica
 //ng g s /service/servico --spec=false : comando para criar um service dentro de uma pasta especifica
+// ng build --prod --base-href /assistentevirtual/: comando para gerar build de producao setando base href="/assistentevirtual/"
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
