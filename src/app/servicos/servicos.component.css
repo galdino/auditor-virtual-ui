@@ -42,6 +42,20 @@
     text-decoration: underline;
 }
 
+#check{
+    cursor: pointer;
+    font-size: 25px;
+    vertical-align: -25%;
+    color: #0A5F55;
+}
+
+#times{
+    cursor: pointer;
+    font-size: 25px;
+    vertical-align: -25%;
+    color: #a94442;
+}
+
 .row{
     margin-top: 10px;
 }

@@ -71,12 +71,12 @@
                         <div class="col-md-12">
                             <div id="dataTable">
                                 <h3>Regras</h3>
-                                <p-dataTable [value]="servCriticaAutorizacao" [rows]="5" [paginator]="true" [loading]="loading" emptyMessage="Nenhum registro encontrado!">
-                                    <p-column [style]="{'width':'5%', 'text-align':'center'}" field="id" header="Id" >
+                                <p-dataTable [value]="servCriticaAutorizacao" [rows]="10" [paginator]="true" [loading]="loading" emptyMessage="Nenhum registro encontrado!">
+                                    <!-- <p-column [style]="{'width':'5%', 'text-align':'center'}" field="id" header="Id" >
                                         <ng-template let-col let-node="rowData" pTemplate="body">
                                             <a id="select" title="Alterar Regra" (click)="showAlterarRegra(node)" >{{node[col.field]}}</a>
                                         </ng-template>
-                                    </p-column>
+                                    </p-column> -->
                                     <p-column [style]="{'width':'7%', 'text-align':'center'}" field="codServMedHosp" header="Cód." ></p-column>
                                     <p-column [style]="{'width':'43%'}" field="intents" header="Crítica Autorização" ></p-column>
                                     <p-column [style]="{'width':'15%', 'text-align':'center'}" field="dataInclusao" header="Data Inclusão" >
@@ -85,11 +85,15 @@
                                         </ng-template>                                         -->
                                     </p-column>
                                     <p-column [style]="{'width':'15%', 'text-align':'center'}" field="dataExclusao" header="Data Exclusão" ></p-column>
-                                    <p-column [style]="{'width':'10%', 'text-align':'center'}" field="qtdeServMedHospPermitida" header="Quant. Permitida" ></p-column>
-                                    <p-column [style]="{'width':'5%', 'text-align':'center'}" field="dataExclusao" >
+                                    <p-column [style]="{'width':'10%', 'text-align':'center'}" field="qtdeServMedHospPermitida" header="Quant. Permitida" >
                                         <ng-template let-col let-node="rowData" pTemplate="body">
-                                            <i id="excluir-icon" *ngIf="node[col.field] == null" (click)="confirmExcluir(node)" class="fa fa-check" title="Alterar Status"></i>
-                                            <i id="reativar-icon" *ngIf="node[col.field] != null" (click)="confirmReativar(node)" class="fa fa-times" title="Alterar Status"></i>
+                                            <a id="select" title="Alterar Quantidade" (click)="showAlterarRegra(node)" >{{node[col.field]}}</a>
+                                        </ng-template>
+                                    </p-column>
+                                    <p-column [style]="{'width':'5%', 'text-align':'center'}" field="dataExclusao" header="Status" >
+                                        <ng-template let-col let-node="rowData" pTemplate="body">
+                                            <i id="check" *ngIf="node[col.field] == null" (click)="confirmExcluir(node)" class="fa fa-check" title="Alterar Status"></i>
+                                            <i id="times" *ngIf="node[col.field] != null" (click)="confirmReativar(node)" class="fa fa-times" title="Alterar Status"></i>
                                         </ng-template>
                                     </p-column>
                                 </p-dataTable>
@@ -105,6 +109,7 @@
                             <div id="botao">
                                 <button pButton type="submit" label="Salvar" class="ui-button-rounded ui-button-success" [disabled]="frmservicos.invalid"></button>
                                 <button pButton type="button" label="Cancelar" class="ui-button-rounded ui-button-success" (click)="cancelarRegra(frmservicos)"></button>
+                                <button pButton type="button" label="Sair" class="ui-button-rounded ui-button-success" [routerLink]="['../telainicial']"></button>
                             </div>
                         </div>
                     </div>

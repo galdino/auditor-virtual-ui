@@ -15,6 +15,15 @@
             <p-confirmDialog [style]="{width: '500px'}" acceptLabel="Sim" rejectLabel="Não">
             </p-confirmDialog>
           </div>
+          <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <div id="botao">
+                    <button pButton type="button" label="Sair" class="ui-button-rounded ui-button-success" [routerLink]="['../telainicial']"></button>
+                </div>
+            </div>
+        </div>
         <p-growl class="pGrowl" [value]="msgsGrowl"></p-growl>  
         </p-fieldset>        
       </div>
