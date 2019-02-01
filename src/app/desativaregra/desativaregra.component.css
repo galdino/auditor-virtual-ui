@@ -21,6 +21,10 @@
     top:7px;
 }
 
+.ui-button-rounded.ui-button-secondary{
+    background-color: #e6e6e6;
+}
+
 span {
     float: left;
     color:#a94442;
